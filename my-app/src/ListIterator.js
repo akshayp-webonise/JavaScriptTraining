@@ -28,10 +28,6 @@ class ListIterator extends Component {
     return null;
   }
 
-  handleDelete(key) {
-    this.props.deleteItem(key);
-  }
-
   render() {
     return (
       <ul>
@@ -40,7 +36,7 @@ class ListIterator extends Component {
             return (
               <li key={item.key}>
                 <span>{item.text}</span>
-                <button onClick={this.handleDelete.bind(this, item.key)}>x</button>
+                <button onClick={() => this.props.deleteItem(item.key)}>x</button>
               </li>
             );
           })
