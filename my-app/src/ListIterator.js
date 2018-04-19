@@ -11,14 +11,13 @@ class ListIterator extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.listItems !== nextProps.listItems) {
-      let sortedArray = nextProps.listItems.sort();
-      nextProps.listItems.sort((elem1, elem2) => {
+      let sortedArray = nextProps.listItems.sort((elem1, elem2) => {
         let tempVar1 = elem1.text;
         let tempVar2 = elem2.text;
         if (tempVar1 < tempVar2)
-            return -1
+          return -1
         if (tempVar1 > tempVar2)
-            return 1
+          return 1
         return 0
       });
       return {
@@ -48,12 +47,12 @@ class ListIterator extends Component {
 
 ListIterator.defaultProps = {
   listItems: [],
-  deleteItem: () => { },
+  deleteItem: () => { }
 };
 
 ListIterator.propTypes = {
   listItems: PropTypes.array,
-  deleteItem: PropTypes.func,
+  deleteItem: PropTypes.func
 };
 
 export default ListIterator;

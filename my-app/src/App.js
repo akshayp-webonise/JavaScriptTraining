@@ -1,31 +1,15 @@
 import React, { Component } from 'react';
 import ListIterator from './ListIterator';
-import InputComponent from './InputComponent';
+import FormComponent from './FormComponent';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
-      value: ''
+      items: []
     };
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleSomeInput = this.handleSomeInput.bind(this);
-    this.inputValueSetter = this.inputValueSetter.bind(this);
-  }
-
-  handleSomeInput() {
-    let items = [...this.state.items];
-    if (this.state.value !== '') {
-      items.push({
-        key: new Date().valueOf(),
-        text: this.state.value
-      });
-      this.setState({
-        items,
-        value: ''
-      });
-    }
+    this.handleUserInput = this.handleUserInput.bind(this);
   }
 
   handleDelete(elementToBeDeleted) {
@@ -40,16 +24,31 @@ class App extends Component {
     });
   }
 
-  inputValueSetter(somethingElse) {
-    this.setState({
-      value: somethingElse
+  handleUserInput(valueOfUserInput) {
+    let duplicateInput = false;
+    let items = [...this.state.items];
+    items.forEach(item => {
+      if (Object.values(item).indexOf(valueOfUserInput) > -1) {
+        duplicateInput = true;
+      }
     });
+    if (!duplicateInput) {
+      items.push({
+        key: new Date().valueOf(),
+        text: valueOfUserInput
+      });
+      this.setState({
+        items
+      });
+    } else {
+      alert('Duplicate Input');
+    }
   }
 
   render() {
     return (
       <div className='app'>
-        <InputComponent something={this.inputValueSetter} />
+        <FormComponent validateUserInput={this.handleUserInput} />
         <ListIterator listItems={this.state.items} deleteItem={this.handleDelete} />
       </div>
     );
