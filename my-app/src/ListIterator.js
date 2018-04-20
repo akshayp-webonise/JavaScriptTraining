@@ -7,31 +7,28 @@ class ListIterator extends Component {
     this.state = {
       listItems: this.props.listItems
     };
+    this.sortArrays = this.sortArrays.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.listItems !== nextProps.listItems) {
-      let sortedArray = nextProps.listItems.sort((elem1, elem2) => {
-        let tempVar1 = elem1.text;
-        let tempVar2 = elem2.text;
-        if (tempVar1 < tempVar2)
-          return -1
-        if (tempVar1 > tempVar2)
-          return 1
-        return 0
-      });
-      return {
-        listItems: sortedArray
-      };
-    }
-    return null;
+  sortArrays() {
+    const listItems = [...this.props.listItems];
+    return listItems.sort((elem1, elem2) => {
+      let tempVar1 = elem1.text;
+      let tempVar2 = elem2.text;
+      if (tempVar1 < tempVar2)
+        return -1
+      if (tempVar1 > tempVar2)
+        return 1
+      return 0
+    });
   }
-
+  
   render() {
+    let sortedListItems = this.sortArrays();
     return (
       <ul>
         {
-          this.state.listItems.map(item => {
+          sortedListItems.map(item => {
             return (
               <li key={item.key}>
                 <span>{item.text}</span>
